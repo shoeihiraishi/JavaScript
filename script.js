@@ -163,4 +163,144 @@ console.log(aa + bb * cc);
 console.log((aa + bb) * cc);
 //暗黙的な型変換
 console.log(1 === "1");
+console.log(1 == "1");
+console.log(1 + true);
+// 異なる型である場合に暗黙的な型変換が行われる
+console.log(1 == "1");
+console.log(0 == false);
+console.log(10 == ["10"]);
+//常に厳密等価演算子を使用する
+console.log(1 === "1");
+console.log(0 === false);
+console.log(10 === ["10"]);
+
+console.log(1 + "2");
+// 演算過程で次のように暗黙的な型変換が行われる
+console.log("1" + "2");
+
+console.log(1 - "2");
+// 演算過程で次のように暗黙的な型変換が行われる
+console.log(1 - 2);
+
+const x=1 , y="2" , z=3;
+console.log(x + y + z);
+console.log(y + x + z);
+console.log(z + x + y);
+
+console.log(Boolean("string"));
+console.log(Boolean(1));
+console.log(Boolean({}));
+console.log(Boolean(0));
+console.log(Boolean(""));
+console.log(Boolean(null));
+//Stringコンストラクター
+console.log(String(1));
+console.log(String("str"));
+console.log(String(true));
+console.log(String(null));
+console.log(String(undefined));
+console.log(String(Symbol("シンボルの説明文")));
+//プリミティブ型でない値の場合
+console.log(String([1 , 2 , 3]));
+console.log(String({key : "value"}));
+console.log(String(function(){}));
+
+console.log("文字列と" + String(Symbol("シンボルの説明")));
+
+//ユーザー入力を文字列として受け取る
+const input = window.prompt("数字を入力してください" , "42");
+//文字列を数値に変換する
+const num = Number(input);
+console.log(typeof num);
+console.log(num);
+
+//"1"をパースして10進数として取り出す
+console.log(Number.parseInt("1" , 10));
+//余計な文字は無視してパースした結果を返す
+console.log(Number.parseInt("42px" , 10));
+console.log(Number.parseInt("10.5" , 10));
+//文字列をパースして浮動小数点数として取り出す
+console.log(Number.parseFloat("1"));
+console.log(Number.parseFloat("42.5px" , 10));
+console.log(Number.parseFloat("10.5" , 10));
+//数字ではない為、数値へは変換できない
+console.log(Number.parseInt("文字列"));
+//未定義の値はNaNになる
+console.log(Number.parseFloat(undefined));
+
+const userInput = "任意の文字列";
+const num2 = Number.parseInt(userInput , 10);
+if (!Number.isNaN(num2)){
+    console.log("NuNではない値にパースできた" , num2);
+}
+const xx = 10;
+const yy = x + NaN;
+const zz = y + 20;
+console.log(xx);
+console.log(yy);
+console.log(zz);
+console.log(typeof NaN);
+function isNaN(x){
+    return x !== x;
+}
+console.log(isNaN(1));
+console.log(isNaN("str"));
+console.log(isNaN({}));
+console.log(isNaN([]));
+console.log(isNaN(NaN));
+
+console.log(Number.isNaN(NaN));
+
+// 任意の個数の数値を受け取り、その合計値を返す関数
+function sum(...values) {
+    return values.reduce((total, value) => {
+        return total + value;
+    }, 0);
+}
+const x2 = 1, z2 = 10;
+let y2;
+console.log(sum(x2, y2, z2));
+
+// /**
+//  * 数値を合計した値を返します。
+//  * 1つ以上の数値と共に呼び出す必要があります。
+//  * @param {...number} values
+//  * @returns{number}
+//  *
+//  **/
+// function sum(...values) {
+//     return values.reduce((total, value) => {
+//         //値がNumber型ではない場合に、例外を投げる
+//         if (typeof value !== "number") {
+//             throw new Error(`${value}はNumber型ではありません`);
+//         }
+//         return total + Number(value);
+//     }, 0);
+// }
+// const x3 = 1, z3 = 10;
+// let y3; //`y`はundefined
+// console.log(x3, y3, z3);
+// //Number型でない`y`を渡しているため例外が発生する
+// console.log(sum(x3, y3, z3));
+
+//空文字列かどうかを判定
+function isEmptyString(str) {
+    //`str`がfalsyな値なら、‘isEmptyString‘関数は`true`を返す
+    return !Boolean(str);
+}
+//空文字列の場合は、trueを返す
+console.log(isEmptyString(""));
+//falsyな値の場合は、trueを返す
+console.log(isEmptyString(0));
+//undefinedの場合は、trueを返す
+console.log(isEmptyString());
+
+//空文字列かどうかを判定
+function isEmptyString(str) {
+    //String型でlengthが0の値の場合はtrueを返す
+    return typeof str === "string" && str.length === 0;
+}
+console.log(isEmptyString(0));
+console.log(isEmptyString());
+
 
