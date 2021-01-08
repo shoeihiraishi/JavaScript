@@ -5,6 +5,7 @@ function double(num) {
 }
 //double関数の返り値はnumに10を入れてreturn文で返した値
 console.log(double(10));
+
 function fn() {
     //何も返り値を指定していない場合はundefinedを返す
     return;
@@ -70,9 +71,9 @@ function addPrefix(text, prefix) {
     const pre = prefix ?? "デフォルト:";
     return pre + text;
 }
-    //falsyな値でも意図通りに動作する
-    console.log(addPrefix("文字列", ""));
-    console.log(addPrefix("文字列", "カスタム:"));
+//falsyな値でも意図通りに動作する
+console.log(addPrefix("文字列", ""));
+console.log(addPrefix("文字列", "カスタム:"));
 //引数の呼びだしが多い場合
 function add(x, y) {
     return x + y;
@@ -128,7 +129,9 @@ const user = {
 };
 printUserId(user);
 //第一引数のオブジェクトからidプロパティを変数idとして定義する
-function printUserId({ id }) {
+function printUserId({
+    id
+}) {
     console.log(id);
 }
 const user2 = {
@@ -167,12 +170,14 @@ const fnC = X => {};
 const fnD = (x, y) => {};
 //値の返し方
 //次の2つの定義は同じ意味となる
-const mulA = x => {return x * x; };
+const mulA = x => {
+    return x * x;
+};
 const mulB = x => x * x;
 
 const array3 = [1, 2, 3];
 //1,2,3と順番に値が渡されコールバック関数が処理する
-const doubleArray = array3.map(function(value) {
+const doubleArray = array3.map(function (value) {
     return value * 2;
 });
 console.log(doubleArray);
@@ -184,7 +189,7 @@ const output = (value) => {
 array4.forEach(output);
 //メソッド
 const obj = {
-    method: function() {
+    method: function () {
         return "this is method";
     }
 };
@@ -196,20 +201,23 @@ const obj2 = {
     }
 };
 console.log(obj2.method());
+
 //文と式
-// 1という式の評価値を表示
-console.log(1); // => 1
-// 1 + 1という式の評価値を表示
-console.log(1 + 1); // => 2
-// 式の評価値を変数に代入
+//1という評価値を表示
+console.log(1);
+//1+1という式の評価値を表示
+console.log(1 + 1);
+//式の評価値を変数に代入
 const total = 1 + 1;
-// 関数式の評価値(関数オブジェクト)を変数に代入
-const fn2 = function() {
+//関数式の評価値（関数オブジェクト）を変数に代入
+const fn2 = function () {
     return 1;
-};
-// fn() という式の評価値を表示
+}
+//fn()という式の評価値を表示
 console.log(fn2());
-//文
+const isTrue = true;
+// isTrueという式がif文の中に出てくる
+if (isTrue) {}
 // if文とブロック文の組み合わせ
 if (true) {
     console.log("文1");
@@ -217,7 +225,163 @@ if (true) {
 }
 // ブロックで終わらない文なので、セミコロンが必要
 if (true) console.log(true);
-// ブロックで終わる文なので、セミコロンが不要
+// ブロックで終わる文なので、ゼミコロンが不要
 if (true) {
     console.log(true);
 }
+// learn関数を宣言する関数宣言文
+function learn() {}
+// 関数式をread変数へ代入
+const read = function () {}
+
+function fn() {}
+// fn(式)の評価値を代入する変数宣言の文
+const read2 = fn;
+
+//if文
+if (true) {
+    console.log("この処理は実行されます");
+}
+if (true) {
+    console.log("この処理は実行されます");
+}
+const x = 42;
+if (x > 10) {
+    console.log("xは10より大きな値です");
+}
+
+if (true) {
+    console.log("この行は実行されます");
+}
+if ("文字列") {
+    console.log("この行は実行されます");
+}
+if (42) {
+    console.log("この行は実行されます");
+}
+if (["配列"]) {
+    console.log("この行は実行されます");
+}
+if ({
+        name: "オブジェクト"
+    }) {
+    console.log("この行は実行されます");
+}
+
+if (false) {
+    // この行は実行されません
+}
+if ("") {
+    // この行は実行されません
+}
+if (0) {
+    // この行は実行されません
+}
+if (undefined) {
+    // この行は実行されません
+}
+if (null) {
+    // この行は実行されません
+}
+const version = "ES6";
+if (version === "ES5") {
+    console.log("ECMAScript 5");
+} else if (version === "ES6") {
+    console.log("ECMAScript 2015");
+} else if (version === "ES7") {
+    console.log("ECMAScript 2016");
+}
+const num = 1;
+if (num > 10) {
+    console.log(`numは10より大きいです: ${num}`);
+} else {
+    console.log(`numは10以下です: ${num}`);
+}
+//西暦での現在の年は new Date().getFullYear();で取得
+const year = new Date().getFullYear();
+if (year % 4 === 0) {
+    if (year % 100 === 0) {
+        if (year % 400 === 0) {
+            console.log(`${year}年はうるう年です`);
+        } else {
+            console.log(`${year}年はうるう年ではありません`);
+        }
+    } else {
+        console.log(`${year}年はうるう年です`);
+    }
+} else {
+    console.log(`${year}年はうるう年ではありません`);
+}
+
+const year2 = new Date().getFullYear();
+if (year2 % 400 === 0) {
+    console.log(`${year2}年はうるう年です`);
+} else if (year2 % 100 === 0) {
+    console.log(`${year2}年はうるう年ではありません`);
+} else if (year2 % 4 === 0) {
+    console.log(`${year2}年はうるう年です`);
+} else {
+    console.log(`${year2}年はうるう年ではありません`);
+}
+//switch文
+const version2 = "ES6";
+switch (version2) {
+    case "ES5":
+        console.log("ECMAScript 5");
+        break;
+    case "ES6":
+        console.log("ECMAScript 2015");
+        break;
+    case "ES7":
+        console.log("ECMAScript 2016");
+        break;
+    default:
+        console.log("しらないバージョンです");
+        break;
+}
+//上記をif文で記述すると
+const version3 = "ES6";
+if (version3 === "ES5") {
+    console.log("ECMAScript 5");
+} else if (version3 === "ES6") {
+    console.log("ECMAScript 2015");
+} else if (version3 === "ES7") {
+    console.log("ECMAScript 2016");
+} else {
+    console.log("知らないバージョンです");
+}
+//breakを省略
+const version4 = "ES6";
+switch (version) {
+    case "ES5":
+        console.log("ECMAScript 5");
+    case "ES6":
+        console.log("ECMAScript 2015");
+    case "ES7":
+        console.log("ECMAScript 2016");
+    default:
+        console.log("しらないバージョンです");
+}
+function getECMScriptName(version2) {
+    switch (version2) {
+        case "ES5":
+            return "ECMAScript 5";
+        case "ES6":
+            return "ECMAScript 2015";
+        case "ES7":
+            return "ECMAScript 2016"
+        default:
+            return "しらないバージョンです"
+    }
+}
+//関数を実行して`return`された値を得る
+// getECMAScriptName("ES6");
+
+//while文
+let x = 0;
+console.log(`ループ開始前のxの値: ${x}`);
+while (x < 10) {
+    console.log(x);
+    x += 1;
+}
+console.log(`ループ終了後のxの値: ${x}`);
