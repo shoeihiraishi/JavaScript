@@ -1124,3 +1124,145 @@ try {
 }
 
 //非同期処理
+{
+    function blockTime(timeout) {
+        const startTime = Date.now();
+        while(true) {
+            const diffTime = Date.now() - startTime;
+            if (diffTime >= timeout) {
+                return;
+            }
+        }
+    }
+    console.log("処理を開始");
+    blockTime(1000);
+    console.log("この行が呼ばれるまで処理が１秒感ブロックされる");
+}
+{
+    function blockTime(timeout) {
+        const startTime = Date.now();
+        while (true) {
+            const diffTime = Date.now() - startTime;
+            if (diffTime >= timeout) {
+                return;
+            }
+        }
+    }
+
+    console.log("1. setTimeoutのコールバック関数を10ミリ秒後に実行します");
+    setTimeout(() => {
+        console.log("3. ブロックする処理を開始します");
+        blockTime(1000);
+        console.log("4. ブロックする処理が完了しました");
+    }, 10);
+    console.log("2. 同期的な処理を実行します");
+}
+{
+function blockTime(timeout) {
+    const startTime = Date.now();
+    while (true) {
+        const diffTime = Date.now() - startTime;
+        if (diffTime >= timeout) {
+            return;
+        }
+    }
+}
+
+const startTime = Date.now();
+setTimeout(() => {
+    const endTime = Date.now();
+    console.log(`非同期処理のコールバックが呼ばれるまで${endTime - startTime}ミリ秒かかりました`);
+}, 10);
+console.log("ブロックする処理を開始します");
+blockTime(1000);
+console.log("ブロックする処理が完了しました");
+}
+{
+    try {
+        throw new Error("同期的なエラー");
+    } catch (error) {
+        console.log("同期的なエラーをキャッチできる");
+    }
+    console.log("この行は実行されます");
+}
+setTimeout(() => {
+    try {
+        throw new Error("エラー");
+    } catch (error) {
+        console.log("エラーをキャッチできる");
+    }
+}, 10);
+console.log("この行は実行されます");
+{
+function dummyFetch(path, callback) {
+    setTimeout(() => {
+        if (path.startsWith("/success")) {
+            callback(null, { body: `Response body of ${path}` });
+        } else {
+            callback(new Error("NOT FOUND"));
+        }
+    }, 1000 * Math.random());
+}
+dummyFetch("/success/data", (error, response) => {
+    if (error) {
+    } else {
+        console.log(response);
+    }
+});
+dummyFetch("/failure/data", (error, response) => {
+    if (error) {
+        console.log(error.message);
+    } else {
+    }
+});
+}
+{
+    function dummyFetch(path, successCallback, failureCallback) {
+        setTimeout(() => {
+            if (path.startsWith("/success")) {
+                successCallback({ body: `Response body of ${path}` });
+            } else {
+                failureCallback(new Error("NOT FOUND"));
+            }
+        }, 1000 * Math.random());
+    }
+}
+{
+    const exector = (resolve, reject) => {
+
+    };
+    const promise = new Promise(exector);
+}
+{
+    const promise = new Promise((resolve, reject) => {
+    });
+    const onFulfilled = () => {
+        console.log("resolveされたときに呼ばれる");
+    };
+    const onRejected = () => {
+        console.log("rejectされたときに呼ばれる");
+    };
+    promise.then(onFulfilled, onRejected);
+}
+{
+    function dummyFetch(path) {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                if (path.startsWith("/success")) {
+                    resolve({ body: `Response body of ${path}` });
+                } else {
+                    reject(new Error("NOT FOUND"));
+                }
+            }, 1000 * Math.random());
+        });
+    }
+    dummyFetch("/success/data").then(function onFulfilled(response) {
+        console.log(response);
+    }, function onRejected(error) {
+    });
+    dummyFetch("/failure/data").then(function onFulfilled(response) {
+    }, function onRejected(error) {
+        console.log(error);
+    });
+}
+//promice then
