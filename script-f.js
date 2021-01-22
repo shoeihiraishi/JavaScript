@@ -1440,7 +1440,7 @@ rejectedPromise.then(() => {
     });
 }
 {
-    Promise.reject(new Error("失敗")).catch(error => { 
+    Promise.reject(new Error("失敗")).catch(error => {
         return 1;
     }).then(value => {
         console.log(value);
