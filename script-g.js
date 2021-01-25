@@ -281,30 +281,311 @@ promise.then(() => {
     });
 }
 {
-function dummyFetch(path) {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            if (path.startsWith("/resource")) {
-                resolve({ body: `Response body of ${path}` });
-            } else {
-                reject(new Error("NOT FOUND"));
+    function dummyFetch(path) {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                if (path.startsWith("/resource")) {
+                    resolve({ body: `Response body of ${path}` });
+                } else {
+                    reject(new Error("NOT FOUND"));
+                }
+            }, 1000 * Math.random());
+        });
+    }
+    {
+        async function fetchResources(resources) {
+            const results = [];
+            for (let i = 0; i < resources.length; i++) {
+                const resource = resources[i];
+                const response = await dummyFetch(resource);
+                results.push(response.body);
             }
-        }, 1000 * Math.random());
+            return results;
+        }
+        const resources = [
+            "/resource/A",
+            "/resource/B"
+        ];
+    }
+}
+{
+    async function asyncMain() {
+    await new Promise((resolve) => {
+        setTimeout(resolve, 16);
     });
 }
-async function fetchResources(resources) {
-    const results = [];
-    for (let i = 0; i < resources.length; i++) {
-        const resource = resources[i];
-        const response = await dummyFetch(resource);
-        results.push(response.body);
-    }
-    return results;
+console.log("1. asyncMain関数を呼び出します");
+asyncMain().then(() => {
+    console.log("3. asyncMain関数が完了しました");
+});
+console.log("2. asyncMain関数外では、次の行が同期的に呼び出される");
 }
-const resources = [
-    "/resource/A",
-    "/resource/B"
-];
-fetchResources(resources).then((results) => {
+{
+    function dummyFetch(path) {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                if (path.startsWith("/resource")) {
+                    resolve({ body: `Response body of ${path}` });
+                } else {
+                    reject(new Error("NOT FOUND"));
+                }
+            }, 1000 * Math.random());
+        });
+    }
+    async function fetchResources(resources) {
+        const results = [];
+        resources.forEach(async function(resource) {
+            const response = await dummyFetch(resource);
+            results.push(response.body);
+        });
+        return results;
+    }
+    const resources = ["/resource/A", "/resource/B"];
+    fetchResources(resources).then((results) => {
+        console.log(results);
+    });
+}
+{
+    function dummyFetch(path) {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                if (path.startsWith("/resource")) {
+                    resolve({ body: `Response body of ${path}` });
+                } else {
+                    reject(new Error("NOT FOUND"));
+                }
+            }, 1000 * Math.random());
+        });
+    }
+    async function fetchResources(resources) {
+        const results = [];
+        resources.forEach(async function(resource) {
+            const response = await dummyFetch(resource);
+            results.push(response.body);
+        });
+        return results;
+    }
+    const resources = ["/resource/A", "/resource/B"];
+    fetchResources(resources).then((results) => {
+        console.log(results);
+    });
+}
+//Map Set
+{
+    const map = new Map();
+    console.log(map.size);
+}
+{
+    const map = new Map([["key1", "value1"], ["key2", "value2"]]);
+    console.log(map.size);
+}
+{
+    const map = new Map();
+    map.set("key", "value1");
+    console.log(map.size);
+    console.log(map.get("key"));
+    map.set("key", "value2");
+    console.log(map.get("key"));
+    console.log(map.has("key"));
+    console.log(map.has("foo"));
+}
+{
+    const map = new Map();
+    map.set("key1", "value1");
+    map.set("key2", "value2");
+    console.log(map.size);
+    map.delete("key1");
+    console.log(map.size);
+    map.clear();
+    console.log(map.size);
+}
+{
+    const map = new Map([["key1", "value1"], ["key2", "value2"]]);
+    const results = [];
+    map.forEach((value, key) => {
+    results.push(`${key}:${value}`);
+    });
     console.log(results);
+}
+{
+    const map = new Map([["key1", "value1"], ["key2", "value2"]]);
+    const keys = [];
+    for (const key of map.keys()) {
+        keys.push(key);
+    }
+    console.log(keys);
+    const keysArray = Array.from(map.keys());
+    console.log(keysArray);
+}
+{
+    const map = new Map([["key1", "value1"], ["key2", "value2"]]);
+    const entries = [];
+    for (const [key, value] of map.entries()) {
+        entries.push(`${key}:${value}`);
+    }
+    console.log(entries);
+}
+{
+    const map = new Map([["key1", "value1"], ["key2", "value2"]]);
+    const results = [];
+    for (const [key, value] of map) {
+        results.push(`${key}:${value}`);
+    }
+    console.log(results);
+}
+{
+    const map = {};
+function has(key) {
+    return typeof map[key] !== "undefined";
+}
+console.log(has("foo"));
+console.log(has("constructor"));
+}
+{
+    class ShoppingCart {
+        constructor() {
+            this.items = new Map();
+        }
+        addItem(item) {
+            const count = this.items.get(item) ?? 0;
+            this.items.set(item, count + 1);
+        }
+        getTotalPrice() {
+            return Array.from(this.items).reduce((total, [item, count]) => {
+                return total + item.price * count;
+            }, 0);
+        }
+        toString() {
+            return Array.from(this.items).map(([item, count]) => {
+                return `${item.name}:${count}`;
+            }).join(",");
+        }
+    }
+    const shoppingCart = new ShoppingCart();
+    const shopItems = [
+        { name: "みかん", price: 100 },
+        { name: "リンゴ", price: 200 },
+    ];
+    shoppingCart.addItem(shopItems[0]);
+    shoppingCart.addItem(shopItems[0]);
+    shoppingCart.addItem(shopItems[1]);
+    console.log(shoppingCart.getTotalPrice());
+    console.log(shoppingCart.toString());
+}
+{
+    function sendPOSTRequest(url, data) {
+        const httpRequest = new XMLHttpRequest();
+        httpRequest.setRequestHeader("Content-Type", "application/json");
+        httpRequest.send(JSON.stringify(data));
+        httpRequest.open("POST", url);
+    }
+    function onLoginFormSubmit(event) {
+        const form = event.target;
+        const data = {
+            userName: form.elements.userName,
+            password: form.elements.password,
+        };
+        sendPOSTRequest("/api/login", data);
+    }
+}
+{
+    const listenersMap = new WeakMap();
+
+class EventEmitter {
+    addListener(listener) {
+        const listeners = listenersMap.get(this) ?? [];
+        const newListeners = listeners.concat(listener);
+        listenersMap.set(this, newListeners);
+    }
+}
+
+
+    let eventEmitter = new EventEmitter();
+    eventEmitter.addListener(() => {
+    console.log("イベントが発火しました");
+});
+    eventEmitter = null;
+}
+{
+    const map = new Map();
+    map.set(NaN, "value");
+    console.log(NaN === NaN);
+    console.log(map.has(NaN));
+    console.log(map.get(NaN));
+}
+{
+    const set = new Set(["value1", "value2", "value2"]);
+    console.log(set.size);
+}
+{
+    const set = new Set();
+    set.add("a");
+    console.log(set.size);
+    set.add("a");
+    console.log(set.size);
+    console.log(set.has("a"));
+    console.log(set.has("b"));
+}
+{
+    const set = new Set();
+    set.add("a");
+    set.add("b");
+    console.log(set.size); // => 2
+    set.delete("a");
+    console.log(set.size); // => 1
+    set.clear();
+    console.log(set.size);
+}
+{
+    const set = new Set(["a", "b"]);
+    const results = [];
+    set.forEach((value) => {
+        results.push(value);
+    });
+    console.log(results);
+}
+{
+    const set = new Set(["a", "b"]);
+    const keysResults = [];
+    for (const value of set.keys()) {
+        keysResults.push(value);
+}
+    console.log(keysResults);
+    const entryResults = [];
+    for (const entry of set.entries()) {
+        entryResults.push(entry);
+    }
+    console.log(entryResults);
+}
+{
+    const set = new Set(["a", "b"]);
+    const results = [];
+    for (const value of set) {
+        results.push(value);
+    }
+    console.log(results);
+}
+//Jason
+{
+    const json = '{ "id": 1, "name": "js-primer" }';
+    const obj = JSON.parse(json);
+    console.log(obj.id); // => 1
+    console.log(obj.name);
+}
+{
+    const json = "[1, 2, 3]";
+    console.log(JSON.parse(json));
+}
+{
+    const userInput = "not json value";
+try {
+    const json = JSON.parse(userInput);
+} catch (error) {
+    console.log("パースできませんでした");
+}
+const obj = { id: 1, name: "js-primer", bio: null };
+console.log(JSON.stringify(obj));
+}
+{
+    
 }
