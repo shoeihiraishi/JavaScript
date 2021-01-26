@@ -435,11 +435,11 @@ console.log("2. asyncMain関数外では、次の行が同期的に呼び出さ�
 }
 {
     const map = {};
-function has(key) {
+    function has(key) {
     return typeof map[key] !== "undefined";
 }
-console.log(has("foo"));
-console.log(has("constructor"));
+    console.log(has("foo"));
+    console.log(has("constructor"));
 }
 {
     class ShoppingCart {
@@ -491,8 +491,8 @@ console.log(has("constructor"));
 {
     const listenersMap = new WeakMap();
 
-class EventEmitter {
-    addListener(listener) {
+    class EventEmitter {
+        addListener(listener) {
         const listeners = listenersMap.get(this) ?? [];
         const newListeners = listeners.concat(listener);
         listenersMap.set(this, newListeners);
@@ -583,9 +583,132 @@ try {
 } catch (error) {
     console.log("パースできませんでした");
 }
-const obj = { id: 1, name: "js-primer", bio: null };
-console.log(JSON.stringify(obj));
+    const obj = { id: 1, name: "js-primer", bio: null };
+    console.log(JSON.stringify(obj));
 }
 {
-    
+    const obj = { id: 1, name: "js-primer", bio: null };
+    const replacer = (key, value) => {
+        if (value === null) {
+            return undefined;
+        }
+        return value;
+    };
+    console.log(JSON.stringify(obj, replacer));
+}
+{
+    const obj = { id: 1, name: "js-primer", bio: null };
+    const replacer = ["id", "name"];
+    console.log(JSON.stringify(obj, replacer));
+}
+{
+    const obj = { id: 1, name: "js-primer" };
+    console.log(JSON.stringify(obj, null, 2));
+}
+{
+    const obj = { id: 1, name: "js-primer" };
+    console.log(JSON.stringify(obj, null, "\t"));
+}
+{
+    console.log(JSON.stringify({ x: function() {} }));
+    console.log(JSON.stringify({ x: Symbol("") }));
+    console.log(JSON.stringify({ x: undefined }));
+    console.log(JSON.stringify({ x: [10, function() {}] }));
+    JSON.stringify({ [Symbol("foo")]: "foo" });
+    console.log(JSON.stringify({ x: /foo/ }));
+    const map = new Map();
+    map.set("foo", "foo");
+    console.log(JSON.stringify({ x: map }));
+}
+{
+    const obj = {
+        foo: "foo",
+        toJSON() {
+            return "bar";
+        }
+    };
+    console.log(JSON.stringify(obj)); // => '"bar"'
+    console.log(JSON.stringify({ x: obj }));
+}
+{
+    const now = new Date();
+    console.log(Date.now());
+    console.log(now.getTime());
+    console.log(now.toISOString());
+}
+{
+    const date = new Date(1136214245999);
+    console.log(date.toISOString());
+}
+{
+    const inUTC = new Date("2006-01-02T15:04:05.999Z");
+    console.log(inUTC.toISOString());
+    const inLocal = new Date("2006-01-02T15:04:05.999");
+    console.log(inLocal.toISOString());
+}
+{
+    const date1 = new Date(2006, 0, 2, 15, 4, 5, 999);
+    console.log(date1.toISOString());
+    const ms = Date.UTC(2006, 0, 2, 15, 4, 5, 999);
+    const date2 = new Date(ms);
+    console.log(date2.toISOString());
+}
+{
+    const invalid = new Date("");
+    console.log(invalid.getTime()); // => NaN
+    console.log(invalid.toString());
+}
+{
+    function formatDate(date) {
+        const yyyy = String(date.getFullYear());
+        const mm = String(date.getMonth() + 1).padStart(2, "0");
+        const dd = String(date.getDate()).padStart(2, "0");
+        return `${yyyy}/${mm}/${dd}`;
+    }
+    const date = new Date("2006-01-02T15:04:05.999");
+    console.log(formatDate(date));
+}
+{
+    const now = new Date();
+    const timezoneOffsetInHours = now.getTimezoneOffset() / 60;
+    console.log(`Hours in UTC: ${now.getHours() + timezoneOffsetInHours}`);
+}
+{
+    const now = moment();
+    const future = now.add(10, "minutes");
+    console.log(future.format("YYYY/MM/DD"));
+}
+{
+    const rad90 = Math.PI * 90 / 180;
+    const sin90 = Math.sin(rad90);
+    console.log(sin90);
+}
+{
+    for (let i = 0; i < 5; i++) {
+        console.log(Math.random());
+    }
+}
+{
+    function getRandom(min, max) {
+        return Math.random() * (max - min) + min;
+    }
+    console.log(getRandom(1, 5));
+}
+{
+    onsole.log(Math.max(1, 10));
+    console.log(Math.min(1, 10));
+}
+{
+    const numbers = [1, 2, 3, 4, 5];
+    console.log(Math.max(...numbers));
+    console.log(Math.min(...numbers));
+}
+{
+    console.log(Math.floor(1.3));
+    console.log(Math.floor(-1.3));
+    console.log(Math.ceil(1.3));
+    console.log(Math.ceil(-1.3));
+    console.log(Math.round(1.3));
+    console.log(Math.round(1.6));
+    console.log(Math.round(-1.3));
 }
